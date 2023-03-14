@@ -25,8 +25,7 @@ class UserController {
     next: NextFunction
   ): Promise<Response<IUser>> {
     try {
-      const { userId } = req.params;
-      const user = await userService.getById(userId);
+      const { user } = res.locals;
       return res.json(user);
     } catch (e) {
       next(e);
@@ -54,8 +53,11 @@ class UserController {
   ): Promise<Response<ICommonResponse<IUser>>> {
     try {
       const { userId } = req.params;
-      const user = req.body;
-      const updatedUser = await User.updateOne({ _id: userId }, { ...user });
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { ...req.body },
+        { new: true }
+      );
       return res.json({
         message: "User updated",
         data: updatedUser,

@@ -27,8 +27,7 @@ class UserController {
     getById(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { userId } = req.params;
-                const user = yield user_service_1.userService.getById(userId);
+                const { user } = res.locals;
                 return res.json(user);
             }
             catch (e) {
@@ -52,8 +51,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId } = req.params;
-                const user = req.body;
-                const updatedUser = yield User_model_1.User.updateOne({ _id: userId }, Object.assign({}, user));
+                const updatedUser = yield User_model_1.User.findByIdAndUpdate(userId, Object.assign({}, req.body), { new: true });
                 return res.json({
                     message: "User updated",
                     data: updatedUser,
