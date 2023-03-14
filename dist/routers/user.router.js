@@ -9,5 +9,5 @@ exports.userRouter = router;
 router.get("/", user_controller_1.userController.getAll);
 router.get("/:userId", user_middleware_1.userMiddleware.getByIdAndThrow, user_controller_1.userController.getById);
 router.post("/", user_controller_1.userController.create);
-router.put("/:userId", user_controller_1.userController.update);
-router.delete("/:userId", user_controller_1.userController.delete);
+router.put("/:userId", user_middleware_1.userMiddleware.getByIdAndThrow, user_controller_1.userController.update);
+router.delete("/:userId", user_middleware_1.userMiddleware.getByIdAndThrow, user_controller_1.userController.delete);

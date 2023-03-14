@@ -13,6 +13,10 @@ router.get("/:userId", userMiddleware.getByIdAndThrow, userController.getById);
 
 router.post("/", userController.create);
 
-router.put("/:userId", userController.update);
+router.put("/:userId", userMiddleware.getByIdAndThrow, userController.update);
 
-router.delete("/:userId", userController.delete);
+router.delete(
+  "/:userId",
+  userMiddleware.getByIdAndThrow,
+  userController.delete
+);
