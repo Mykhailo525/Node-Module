@@ -12,20 +12,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userController = void 0;
 const User_model_1 = require("../models/User.model");
 class UserController {
-    getAll(req, res) {
+    getAll(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield User_model_1.User.find();
-            return res.json(users);
+            try {
+                const users = yield User_model_1.User.find();
+                return res.json(users);
+            }
+            catch (e) {
+                next(e);
+            }
         });
     }
-    getById(req, res) {
+    getById(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { userId } = req.params;
-            const user = yield User_model_1.User.findById({ _id: userId });
-            return res.json(user);
+            try {
+                const { userId } = req.params;
+                const user = yield User_model_1.User.findById(userId);
+                return res.json(user);
+            }
+            catch (e) {
+                next(e);
+            }
         });
     }
-    create(req, res) {
+    create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const body = req.body;
@@ -33,11 +43,11 @@ class UserController {
                 return res.json({ message: "User created", data: user });
             }
             catch (e) {
-                console.log(e.message);
+                next(e);
             }
         });
     }
-    update(req, res) {
+    update(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId } = req.params;
@@ -49,17 +59,22 @@ class UserController {
                 });
             }
             catch (e) {
-                console.log(e);
+                next(e);
             }
         });
     }
-    delete(req, res) {
+    delete(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { userId } = req.params;
-            yield User_model_1.User.deleteOne({ _id: userId });
-            return res.json({
-                message: "User deleted",
-            });
+            try {
+                const { userId } = req.params;
+                yield User_model_1.User.deleteOne({ _id: userId });
+                return res.json({
+                    message: "User deleted",
+                });
+            }
+            catch (e) {
+                next(e);
+            }
         });
     }
 }
