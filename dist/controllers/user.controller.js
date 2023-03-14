@@ -11,11 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userController = void 0;
 const User_model_1 = require("../models/User.model");
+const user_service_1 = require("../srvices/user.service");
 class UserController {
     getAll(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield User_model_1.User.find();
+                const users = yield user_service_1.userService.getAll();
                 return res.json(users);
             }
             catch (e) {
@@ -27,7 +28,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId } = req.params;
-                const user = yield User_model_1.User.findById(userId);
+                const user = yield user_service_1.userService.getById(userId);
                 return res.json(user);
             }
             catch (e) {

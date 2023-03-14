@@ -1,5 +1,15 @@
+# Editor directories and files
 .idea
-node-module.iml
+
+
+# Environment variables
 .env
+.env.*
+
+# Node artifact files
 node_modules
+dist
+
+
+node-module.iml
 package-lock.json

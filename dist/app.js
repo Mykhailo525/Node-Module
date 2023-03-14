@@ -26,9 +26,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 const mongoose = __importStar(require("mongoose"));
 const user_router_1 = require("./routers/user.router");
+(0, dotenv_1.config)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -37,8 +39,7 @@ app.use((err, req, res, next) => {
     const status = err.status;
     return res.status(status).json({ message: err.message, status });
 });
-const PORT = 5100;
-app.listen(PORT, () => {
-    mongoose.connect("mongodb://127.0.0.1:27017/node-module");
-    console.log(`Server started on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    mongoose.connect(process.env.DB_URL);
+    console.log(`Server started on port ${process.env.PORT}`);
 });
